@@ -1,5 +1,5 @@
 #修改TNAME: K2P 中的K2P为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Padavan-user-R3G
+name: Padavan-k2p
 on: 
 #  release:
 #    types: [published]
@@ -36,14 +36,14 @@ jobs:
         if [ $KERNEL = "4.4" ] ; then
         git clone --depth=1 https://github.com/MeIsReallyBa/padavan-4.4.git /opt/rt-n56u
         else
-        git clone -b single-APP --depth=1 https://github.com/limory/padavan-3.4-user.git /opt/rt-n56u
+        git clone -b single-APP --depth=1 https://github.com/miido2023/padavan-3.4-user.git /opt/rt-n56u
         fi
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: MI-R3G
+        TNAME: K2P_nano
         KERNEL: 3.4
       run: |
         cd /opt/rt-n56u/trunk
@@ -98,24 +98,24 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #size 13M 如不集成，从网上下载下来执行，不影响使用
         echo "CONFIG_FIRMWARE_INCLUDE_SRELAY=n" >> .config #srelay架设socket5代理
         echo "CONFIG_FIRMWARE_INCLUDE_HTOP=n" >> .config #htop类似top命令
-        #################### 以下集成到 Xiaomi-R3G ###########################
-        echo "CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER=y" >> .config #DNSFORWARDER
-        echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=y" >> .config #adbyby plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config #拦截广告，可选其他插件
-        echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config #删除左侧导航栏VPN选项
-        echo "CONFIG_FIRMWARE_INCLUDE_MINIDLNA=y" >> .config ### minidlna 1.3.3
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #WEB服务及文件管理
-        echo "CONFIG_FIRMWARE_INCLUDE_TRANSMISSION=y" >> .config ###TRANSMISSION 下载器
-        echo "CONFIG_FIRMWARE_INCLUDE_TRANSMISSION_WEB_CONTROL=y" >> .config ###TRANSMISSION 下载器web管理
-        echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config #集成v2ray执行文件（3.8M左右)
-        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=y" >> .config #集成trojan执行文件(1.1M左右)
-        echo "CONFIG_FIRMWARE_INCLUDE_XRAY=y" >> .config
-        echo "CONFIG_FIRMWARE_INCLUDE_ALDRIVER=y" >> .config
-        echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=y" >> .config
-        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #阿里DDNS
+        #################### 以下集成 ###########################
+        echo "CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER=n" >> .config #DNSFORWARDER
+        echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=n" >> .config #adbyby plus+
+        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=n" >> .config #拦截广告，可选其他插件
+        echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=n" >> .config #删除左侧导航栏VPN选项
+        echo "CONFIG_FIRMWARE_INCLUDE_MINIDLNA=n" >> .config ### minidlna 1.3.3
+        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=n" >> .config #WEB服务及文件管理
+        echo "CONFIG_FIRMWARE_INCLUDE_TRANSMISSION=n" >> .config ###TRANSMISSION 下载器
+        echo "CONFIG_FIRMWARE_INCLUDE_TRANSMISSION_WEB_CONTROL=n" >> .config ###TRANSMISSION 下载器web管理
+        echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=n" >> .config #SS plus+
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config #集成v2ray执行文件（3.8M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config #集成trojan执行文件(1.1M左右)
+        echo "CONFIG_FIRMWARE_INCLUDE_XRAY=n" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_ALDRIVER=n" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=n" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=n" >> .config #阿里DDNS
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
-        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n" >> .config #smartdns
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
@@ -129,5 +129,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-user-R3G-minidlna-filebrowser-transmission-smartdns-aliddns-zerotier-SSR-v2ray-trojan-xray-dnsforwarder-adbyby-adguardhome-aldriver-ddnsto_2025_05_05
+        name: Padavan-k2p
         path: /opt/images
